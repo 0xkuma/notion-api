@@ -20,6 +20,20 @@ Install requirement package
 yarn install
 ```
 
+## Prepare step
+
+1. Create a new integrations to get the notion api key
+   [Notion Developers](https://www.notion.so/my-integrations)
+1. Connect **Task**, **Client Profile** and **Task Master List** to integrations
+1. Setup the environment variable
+
+```
+export NOTION_KEY=""
+export NOTION_TASK_DATABASE_ID=""
+export NOTION_MASTER_LIST_DATABASE_ID=""
+export NOTION_CLIENT_PROFILE_DATABASE_ID=""
+```
+
 ## Run command
 
 ```
