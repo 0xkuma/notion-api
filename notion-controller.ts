@@ -88,7 +88,7 @@ export const queryItem = async (notion: Client, pageId: string) => {
     const response = await notion.pages.retrieve({
       page_id: pageId,
     });
-    return response;
+    return response as any;
   } catch (error: unknown) {
     if (isNotionClientError(error)) {
       switch (error.code) {
