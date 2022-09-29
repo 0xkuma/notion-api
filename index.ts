@@ -1,5 +1,5 @@
 import { Client } from '@notionhq/client';
-import { addItem, queryDB, updateItem } from './notion-controller';
+import { addItem, queryDB, updateItem, queryItem } from './notion-controller';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -38,7 +38,12 @@ const getAllTaskIdCreatedByClientId = async (clientId: string) => {
       },
     },
   });
-  return getAllTaskIdRes?.results.map((item) => item.id)!;
+  let existTaskId: string[] = [];
+  for(let i = 0; i < getAllTaskIdRes?.results.length!; i++) {
+    const res = await queryItem(notion, getAllTaskIdRes?.results[i].id!);
+    existTaskId.push(res?.properties['Task Full Name'].relation[0].id!);
+  }
+  return existTaskId;
 };
 
 export const handler = async (event: any) => {
