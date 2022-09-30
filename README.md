@@ -37,7 +37,7 @@ export NOTION_CLIENT_PROFILE_DATABASE_ID=""
 ## Run command
 
 ```sh
-yarn tsc && node dist/index.js
+yarn build && yarn start
 ```
 
 ## License
