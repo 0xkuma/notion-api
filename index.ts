@@ -57,17 +57,21 @@ const getAllTaskIdCreatedByClientId = async (clientId: string) => {
 };
 
 export const handler = async (event: any) => {
+  console.log('Start the notion api program...');
   const taskIdList = await getAllTaskId();
   const clientIdList = await getAllClientId();
 
   Object.entries(clientIdList).forEach(async ([key, value]) => {
+    console.log('Start to check the client: ' + key);
     const existTaskId = await getAllTaskIdCreatedByClientId(key);
     const missingTaskId = getMissingTaskId(taskIdList, existTaskId);
     if (missingTaskId.length > 0) {
+      console.log(`${key} Missing task id: [${missingTaskId}], Total: ${missingTaskId.length}`);
       for (let i = 0; i < missingTaskId.length; i++) {
         await addItem(notion, taskDatabaseId, value, missingTaskId[i]);
       }
     }
+    console.log('Finish to check the client: ' + key);
   });
 };
 handler(null);
