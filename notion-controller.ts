@@ -42,7 +42,7 @@ export const addItem = async (notion: Client, databaseId: string, client: string
           title: [
             {
               text: {
-                content: '123',
+                content: '',
               },
             },
           ],
