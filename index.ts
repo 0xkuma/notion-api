@@ -1,5 +1,6 @@
 import { Client } from '@notionhq/client';
 import { addItem, queryDB, queryItem } from './notion-controller';
+import { logger } from './logger';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -62,16 +63,19 @@ export const handler = async (event: any) => {
   const clientIdList = await getAllClientId();
 
   Object.entries(clientIdList).forEach(async ([key, value]) => {
-    console.log('Start to check the client: ' + key);
+    logger.info('Start to check the AWS ID: ' + key);
     const existTaskId = await getAllTaskIdCreatedByClientId(key);
     const missingTaskId = getMissingTaskId(taskIdList, existTaskId);
     if (missingTaskId.length > 0) {
-      console.log(`${key} Missing task id: [${missingTaskId}], Total: ${missingTaskId.length}`);
+      logger.info(
+        `AWS ID: ${key}, Missing task id: [${missingTaskId}], Total: ${missingTaskId.length}`,
+      );
       for (let i = 0; i < missingTaskId.length; i++) {
         await addItem(notion, taskDatabaseId, value, missingTaskId[i]);
       }
     }
-    console.log('Finish to check the client: ' + key);
+    logger.info('Finish to check the AWS ID: ' + key);
   });
+  console.log('Finish the notion api program...');
 };
 handler(null);
