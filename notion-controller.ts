@@ -1,4 +1,5 @@
 import { Client, APIErrorCode, isNotionClientError, ClientErrorCode } from '@notionhq/client';
+import { logger } from './logger';
 
 export const queryDB = async (notion: Client, databaseId: string, filter?: any) => {
   try {
@@ -18,16 +19,16 @@ export const queryDB = async (notion: Client, databaseId: string, filter?: any) 
     if (isNotionClientError(error)) {
       switch (error.code) {
         case ClientErrorCode.RequestTimeout:
-          console.log('Request timed out');
+          logger.error('Request timed out');
           break;
         case APIErrorCode.ObjectNotFound:
-          console.log('Object not found');
+          logger.error('Object not found');
           break;
         case APIErrorCode.Unauthorized:
-          console.log('Unauthorized');
+          logger.error('Unauthorized');
           break;
         default:
-          console.log('Unknown error');
+          logger.error('Unknown error');
       }
     }
   }
@@ -68,16 +69,16 @@ export const addItem = async (notion: Client, databaseId: string, client: string
     if (isNotionClientError(error)) {
       switch (error.code) {
         case ClientErrorCode.RequestTimeout:
-          console.log('Request timed out');
+          logger.error('Request timed out');
           break;
         case APIErrorCode.ObjectNotFound:
-          console.log('Object not found');
+          logger.error('Object not found');
           break;
         case APIErrorCode.Unauthorized:
-          console.log('Unauthorized');
+          logger.error('Unauthorized');
           break;
         default:
-          console.log('Unknown error');
+          logger.error('Unknown error');
       }
     }
   }
@@ -93,16 +94,16 @@ export const queryItem = async (notion: Client, pageId: string) => {
     if (isNotionClientError(error)) {
       switch (error.code) {
         case ClientErrorCode.RequestTimeout:
-          console.log('Request timed out');
+          logger.error('Request timed out');
           break;
         case APIErrorCode.ObjectNotFound:
-          console.log('Object not found');
+          logger.error('Object not found');
           break;
         case APIErrorCode.Unauthorized:
-          console.log('Unauthorized');
+          logger.error('Unauthorized');
           break;
         default:
-          console.log('Unknown error');
+          logger.error('Unknown error');
       }
     }
   }
@@ -119,16 +120,16 @@ export const updateItem = async (notion: Client, pageId: string, properties: any
     if (isNotionClientError(error)) {
       switch (error.code) {
         case ClientErrorCode.RequestTimeout:
-          console.log('Request timed out');
+          logger.error('Request timed out');
           break;
         case APIErrorCode.ObjectNotFound:
-          console.log('Object not found');
+          logger.error('Object not found');
           break;
         case APIErrorCode.Unauthorized:
-          console.log('Unauthorized');
+          logger.error('Unauthorized');
           break;
         default:
-          console.log('Unknown error');
+          logger.error('Unknown error');
       }
     }
   }
