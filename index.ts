@@ -32,7 +32,13 @@ const getAllClientId = async () => {
   let clientAwsIdList: IClientAwsId = {};
   for (let i = 0; i < res?.results.length!; i++) {
     const clientId = await queryItem(notion, res?.results[i].id!);
-    clientAwsIdList[clientId?.properties['AWS ID'].rich_text[0].plain_text!] = res?.results[i].id!;
+    if (clientId?.properties['AWS ID'].rich_text.length > 0) {
+      clientAwsIdList[clientId?.properties['AWS ID'].rich_text[0].plain_text!] =
+        res?.results[i].id!;
+    }
+    else {
+      logger.error(`Client ${clientId?.properties['AWS Account Alias'].title[0].text.content} does not have AWS ID`);
+    }
   }
   return clientAwsIdList;
 };
